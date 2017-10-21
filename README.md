@@ -3,11 +3,11 @@
 Created by Good Game Editor. https://good-ed.blogspot.com <br/>
 Android download https://play.google.com/store/apps/details?id=weilican.coineater
 
-吃金幣的人是模擬自然界生物演化的機制，讓尋路AI自我演化的養成遊戲。
+Coin eater is a game to simulate the evolution of biological mechanisms of nature, let the path finding AI of coin eaters self-evolution.
 
-* 遊戲中產生的每一個吃金幣的人都是獨一無二的個體，智能行為各不相同。
-* 觀察不同吃金幣的人的有趣行為，發現樂趣。
-* 從一開始連走路也不會，到進化成為吃金幣高手讓金幣大量噴出。
-* 總共可收集30種不同的外型的吃金幣的人。
+* Each coin eater is unique with different behavior and intelligence.
+* It is funny to observe the interesting behavior of coin eaters.
+* From a newbie to evolve into a expert of coin eater.
+* There are total 30 different shapes of coin eater for collection.
 
 ![image](coineater.png)
