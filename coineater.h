@@ -605,7 +605,7 @@ public:
   {
     AppT &app = AppT::getInst();
 
-    int pos = env.get_empty_pos();
+    int pos = env.get_rand_empty_pos();
 
     int coin_tex_id = TEXTURE_COIN_ID;
     int cc = 1;
@@ -645,7 +645,7 @@ public:
       c.hp -= 1;
       if (0 >= c.hp) {
         env.map[c.pos] = S_EMPTY;
-        int new_pos = env.get_empty_pos();
+        int new_pos = env.get_rand_empty_pos();
         env.map[new_pos] = S_COIN;
         if (c.pos == chest_pos) {
           chest_pos = new_pos;

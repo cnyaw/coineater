@@ -66,12 +66,12 @@ public:
     }
 
     for (int i = 0; i < INIT_MAP_COIN_COUNT; i++) {
-      int pos = get_empty_pos();
+      int pos = get_rand_empty_pos();
       map[pos] = S_COIN;
     }
   }
 
-  int get_empty_pos() const
+  int get_rand_empty_pos() const
   {
     while (true)
     {
