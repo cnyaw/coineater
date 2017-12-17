@@ -351,18 +351,21 @@ function OnStepInit(param)
   end
 
   local x, y = Input.GetMousePos()
-  local o = Good.PickObj(x, y, Good.MAPBG)
-  if ('map' == Good.GetName(o)) then
-    local mapx, mapy = Good.GetPos(o)
-    local tilex, tiley = Resource.GetTileSize(Good.GetMapId(o))
+  local map = Good.PickObj(x, y, Good.MAPBG)
+  if ('map' == Good.GetName(map)) then
+    local mapx, mapy = Good.GetPos(map)
+    local tilex, tiley = Resource.GetTileSize(Good.GetMapId(map))
     local col = math.floor((x - mapx) / tilex)
     local row = math.floor((y - mapy) / tiley)
     if (2 <= col and 12 > col and 2 <= row and 12 > row) then
-      local portal = Good.GenObj(o, 11)
+      local portal = Good.GenObj(map, 11)
       Good.SetPos(portal, tilex * col, tiley * row)
       Good.FireUserIntEvent(CMD_SET_START_POINT + 256 * col + 65536 * row)
       InitTrain()
       Level.OnStep = OnStepInitTrain
+    else
+      local o = GenColorObj(map, 10 * tilex, 10 * tiley, 0xffff0000, 'AnimInvalidPortalPos')
+      Good.SetPos(o, 2 * tilex, 2 * tiley)
     end
     return
   end

@@ -238,6 +238,19 @@ UnlockMap.OnStep = function(param)
   end
 end
 
+AnimInvalidPortalPos = {}
+
+AnimInvalidPortalPos.OnStep = function(param)
+  if (nil == param.k) then
+    local loop1 = ArAddLoop(nil)
+    ArAddMoveTo(loop1, 'Alpha', 0.4, 0)
+    ArAddCall(loop1, 'KillAnimObj', 0)
+    param.k = ArAddAnimator({loop1})
+  else
+    ArStepAnimator(param, param.k)
+  end
+end
+
 function GenLockTexObj(col, row)
   local o = GenTexObj(25, 21, 32, 32, 32, 0, 'UnlockMap')
   Good.SetPos(o, 32 * col, 32 * row)
