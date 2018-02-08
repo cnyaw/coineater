@@ -8,11 +8,11 @@ maps=24 30 31
 levels=0
 
 [scripts]
-10=./level.lua
-20=./helper.lua
+10=./script/level.lua
+20=./script/helper.lua
 5=../good/samples/Util.lua
 15=../good/samples/ar.lua
-33=./walker.lua
+33=./script/walker.lua
 
 [snd67]
 name=coin
