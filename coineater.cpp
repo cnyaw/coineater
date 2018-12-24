@@ -50,12 +50,11 @@ public:
     game.handle_int_event(i);
   }
 
-  void onRender()
+  void onTrigger()
   {
     if (-1 != mRoot && "coin eater" == mRes.mName) {
       game.step_move();
     }
-    BaseT::onRender();
   }
 
   BEGIN_MSG_MAP_EX(CPlayer)
