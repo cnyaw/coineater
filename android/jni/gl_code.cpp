@@ -47,9 +47,8 @@ public:
     game.handle_int_event(i);
   }
 
-  void doTrigger(int keys, int mousex, int mousey)
+  void onTrigger()
   {
-    good::rt::AndroidApplication<CoinEaterApp>::doTrigger(keys, mousex, mousey);
     if (-1 != mRoot && "coin eater" == mRes.mName) {
       game.step_move();
     }
