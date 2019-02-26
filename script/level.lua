@@ -257,6 +257,18 @@ function CloseResetConfirmDialog()
   Level.OnStep = OnStepGame
 end
 
+function GetPlayTimeStr(play_time)
+  local sec = play_time % 60
+  local minute = math.floor(play_time / 60) % 60
+  local hour = math.floor(play_time / 3600) % 24
+  local day = math.floor(play_time / 86400)
+  if (0 < day) then
+    return string.format('play time:%d:%d:%d:%d', day, hour, minute, sec)
+  else
+    return string.format('play time:%d:%d:%d', hour, minute, sec)
+  end
+end
+
 function GenInfoMsg(gained_coin, spent_coin, sent_coin_eater, chest_level, replay_count, play_time)
   if (nil == info_dialog) then
     return
@@ -293,16 +305,7 @@ function GenInfoMsg(gained_coin, spent_coin, sent_coin_eater, chest_level, repla
   SetTextObjColor(s5o, 0xff000000)
   Good.SetPos(s5o, offset_x, offset_y + 4 * (8 + DIALOG_FONT_SIZE))
 
-  local sec = play_time % 60
-  local minute = math.floor(play_time / 60) % 60
-  local hour = math.floor(play_time / 3600) % 24
-  local day = math.floor(play_time / 86400)
-  local s6
-  if (0 < day) then
-    s6 = string.format('play time:%d:%d:%d:%d', day, hour, minute, sec)
-  else
-    s6 = string.format('play time:%d:%d:%d', hour, minute, sec)
-  end
+  local s6 = GetPlayTimeStr(play_time)
   local s6o = Good.GenTextObj(info_msg_root, s6, DIALOG_FONT_SIZE)
   SetTextObjColor(s6o, 0xff000000)
   Good.SetPos(s6o, offset_x, offset_y + 5 * (8 + DIALOG_FONT_SIZE))
