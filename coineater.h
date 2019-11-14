@@ -117,11 +117,13 @@ public:
   int chest_pos, next_chest_counter;
   int replay_count;
   int play_time;
+  int max_iq;
   sw2::StageStack<CoinEaterGame<AppT> > stage;
 
   CoinEaterGame() : start_pos(-1)
   {
     cur_coin_eater_res_idx = gained_coin = spent_coin = sent_coin_eater = play_time = replay_count = 0;
+    max_iq = -10000;
     sel_coin_eater_res = TEXTURE_EATER_ID;
     next_walker_counter = next_walker_cost = INIT_COIN_EATER_WALKER_COST;
   }
@@ -170,6 +172,10 @@ public:
 
     replay_count = attr["replay_count"];
     play_time = attr["play_time"];
+
+    if (attr.find("max_iq")) {
+      max_iq = attr["max_iq"];
+    }
 
     //
     // Gene pool.
@@ -236,6 +242,7 @@ public:
 
     attr["replay_count"] = replay_count;
     attr["play_time"] = play_time;
+    attr["max_iq"] = max_iq;
 
     //
     // Gene pool.
@@ -503,6 +510,7 @@ public:
     }
     avg_score /= (int)pool.size();
     best_score = (std::max)(best_score, avg_score);
+    max_iq = (std::max)(max_iq, best_score);
   }
 
   void train(int test_round)
@@ -874,7 +882,7 @@ public:
 
   void gen_info_msg()
   {
-    AppT::getInst().doLuaScript("GenInfoMsg(%d,%d,%d,%d,%d,%d)", gained_coin, spent_coin, sent_coin_eater, get_chest_level(), replay_count, play_time / 60);
+    AppT::getInst().doLuaScript("GenInfoMsg(%d,%d,%d,%d,%d,%d,%d)", gained_coin, spent_coin, sent_coin_eater, get_chest_level(), replay_count, play_time / 60, max_iq);
   }
 
   void handle_int_event(int i)

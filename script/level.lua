@@ -269,7 +269,7 @@ function GetPlayTimeStr(play_time)
   end
 end
 
-function GenInfoMsg(gained_coin, spent_coin, sent_coin_eater, chest_level, replay_count, play_time)
+function GenInfoMsg(gained_coin, spent_coin, sent_coin_eater, chest_level, replay_count, play_time, max_iq)
   if (nil == info_dialog) then
     return
   end
@@ -309,6 +309,11 @@ function GenInfoMsg(gained_coin, spent_coin, sent_coin_eater, chest_level, repla
   local s6o = Good.GenTextObj(info_msg_root, s6, DIALOG_FONT_SIZE)
   SetTextObjColor(s6o, 0xff000000)
   Good.SetPos(s6o, offset_x, offset_y + 5 * (8 + DIALOG_FONT_SIZE))
+
+  local s7 = string.format('max iq:%d', max_iq)
+  local s7o = Good.GenTextObj(info_msg_root, s7, DIALOG_FONT_SIZE)
+  SetTextObjColor(s7o, 0xff000000)
+  Good.SetPos(s7o, offset_x, offset_y + 6 * (8 + DIALOG_FONT_SIZE))
 end
 
 function UpdateInfoMsg()
