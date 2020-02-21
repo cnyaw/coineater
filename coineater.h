@@ -690,12 +690,12 @@ public:
   {
     static int pool_index = 0;
 
-    if (JOIN == state) {
+    if (sw2::JOIN == state) {
       pool_index = 0;
       return;
     }
 
-    if (TRIGGER == state) {
+    if (sw2::TRIGGER == state) {
       pool[pool_index].score = 0;
       for (int i = 0; i < INIT_START_POINT_TRAIN_COUNT; i++) {
         pool[pool_index].score += pool[pool_index].sim(start_pos);
