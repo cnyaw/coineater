@@ -48,7 +48,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../smallworld2/include;&quot;../../open/lua-5.1.4/src&quot;;../../open/audiere-1.9.4/include;&quot;../../open/yard-1.5&quot;"
+				AdditionalIncludeDirectories="../smallworld2/include;../good/src/good;&quot;../../open/lua-5.1.4/src&quot;;&quot;../../open/audiere-1.9.4/include&quot;;&quot;../../open/yard-1.5&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;_DEBUG;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../smallworld2/include;&quot;../../open/lua-5.1.4/src&quot;;../../open/audiere-1.9.4/include;&quot;../../open/yard-1.5&quot;"
+				AdditionalIncludeDirectories="../smallworld2/include;../good/src/good;&quot;../../open/lua-5.1.4/src&quot;;&quot;../../open/audiere-1.9.4/include&quot;;&quot;../../open/yard-1.5&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG;_CRT_SECURE_NO_DEPRECATE"
 				ExceptionHandling="1"
 				RuntimeLibrary="0"

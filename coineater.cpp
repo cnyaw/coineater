@@ -11,8 +11,8 @@
 
 #include "resource.h"
 
-#include "../good/src/good/rt/rt.h"
-#include "../good/src/good/app/wtl_player.h"
+#include "rt/rt.h"
+#include "app/wtl_player.h"
 
 #include "coineater.h"
 
