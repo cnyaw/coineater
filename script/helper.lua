@@ -96,7 +96,7 @@ function UpdateCoinEaterMsg(count, max_count, next_cost, max_max_count)
     next_msg = string.format('next %d', next_cost)
   else
     next_msg = 'max'
-    Good.SetVisible(28, 0)
+    Good.SetVisible(28, Good.INVISIBLE)
   end
   local next_msg_id = Good.GenTextObj(CoinEaterCountObjId, next_msg, NEXT_COST_FONT_SIZE)
   Good.SetPos(next_msg_id, NEXT_COST_OFFSET_X, NEXT_COST_OFFSET_Y)
@@ -136,7 +136,7 @@ function UpdateStabilityMsg(val, next_cost, max_val)
     next_msg = string.format('next %d', next_cost)
   else
     next_msg = 'max'
-    Good.SetVisible(29, 0)
+    Good.SetVisible(29, Good.INVISIBLE)
   end
   local next_msg_id = Good.GenTextObj(StabilityObjId, next_msg, NEXT_COST_FONT_SIZE)
   Good.SetPos(next_msg_id, NEXT_COST_OFFSET_X, NEXT_COST_OFFSET_Y)

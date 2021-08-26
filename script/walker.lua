@@ -117,9 +117,9 @@ function AddCoinEaterWalker(resid, next_resid)
   InitWalkerAnim(Good.GetParam(o))
   if (-1 ~= next_resid) then
     Good.SetTexId(49, next_resid)
-    Good.SetVisible(49, 1)
+    Good.SetVisible(49, Good.VISIBLE)
   else
-    Good.SetVisible(49, 0)
+    Good.SetVisible(49, Good.INVISIBLE)
   end
   PlaySound(72)
 end
@@ -137,8 +137,8 @@ function InitCoinEaterWalker(resid, next_resid)
   end
   if (-1 ~= next_resid) then
     Good.SetTexId(49, next_resid)
-    Good.SetVisible(49, 1)
+    Good.SetVisible(49, Good.VISIBLE)
   else
-    Good.SetVisible(49, 0)
+    Good.SetVisible(49, Good.INVISIBLE)
   end
 end
