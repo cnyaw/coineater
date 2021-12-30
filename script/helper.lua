@@ -32,6 +32,8 @@ local UpdateStabilityMsg_p2
 local UpdateUnlockNextMapMsg_p1
 local UpdateNextWalkerMsg_p1
 
+local idMapTex = nil
+
 function InitHelper()
   TotalCoinObjId = nil
   CoinEaterCountObjId = nil
@@ -295,6 +297,21 @@ end
 function ResetGlobal()
   InitWalker()
   InitHelper()
+end
+
+function SetMapTex(id, idMap)
+  local cx, cy = Resource.GetMapSize(idMap)
+  local tx, ty = Resource.GetTileSize(idMap)
+  local w, h = cx * tx, cy * ty
+  local canvas = Graphics.GenCanvas(w, h)
+  Graphics.DrawMap(canvas, 0, 0, idMap)
+  if (nil == idMapTex) then
+    idMapTex = Resource.GenTex(canvas, 'maptex')
+  else
+    Resource.UpdateTex(idMapTex, 0, 0, canvas, 0, 0, w, h)
+  end
+  Graphics.KillCanvas(canvas)
+  Good.SetTexId(id, idMapTex)
 end
 
 function UpdateSwitch(IsOn, o)

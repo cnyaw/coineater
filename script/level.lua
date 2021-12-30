@@ -351,6 +351,7 @@ Level = {}
 Level.OnCreate = function(param)
   Good.FireUserIntEvent(CMD_INIT_GAME)
   UpdateAutoSwitchState()
+  SetMapTex(25, 24)
 end
 
 function OnStepInit(param)
@@ -359,10 +360,10 @@ function OnStepInit(param)
   end
 
   local x, y = Input.GetMousePos()
-  local map = Good.PickObj(x, y, Good.MAPBG)
+  local map = Good.PickObj(x, y)
   if ('map' == Good.GetName(map)) then
     local mapx, mapy = Good.GetPos(map)
-    local tilex, tiley = Resource.GetTileSize(Good.GetMapId(map))
+    local tilex, tiley = Resource.GetTileSize(24)
     local col = math.floor((x - mapx) / tilex)
     local row = math.floor((y - mapy) / tiley)
     if (2 <= col and 12 > col and 2 <= row and 12 > row) then

@@ -54,6 +54,7 @@ enum COINEATER_RESOURCE_ID {
   TEXTURE_EATER_ID = 7,
   TEXTURE_EXCLAMATION_ID = 16,
   TEXTURE_CHEST_ID = 70,
+  MAP_10_ID = 24,
   MAP_12_ID = 30,
   MAP_14_ID = 31,
   LEVEL_MAP_ID = 25,
@@ -190,7 +191,7 @@ public:
     for (int i = 0; i < pool_size; i++) {
       char buff[32];
       sprintf(buff, "%d", i);
-      pool[i].gene = gpool[buff].value;
+      pool[i].gene = gpool[(const char*)buff].value;
     }
 
     //
@@ -254,7 +255,7 @@ public:
     for (size_t i = 0; i < pool.size(); i++) {
       char buff[32];
       sprintf(buff, "%d", i);
-      gpool[buff] = pool[i].gene;
+      gpool[(const char*)buff] = pool[i].gene;
     }
 
     //
@@ -332,13 +333,13 @@ public:
       // Set map lock state.
       //
 
+      int idMap = MAP_10_ID;
       if (S_WALL != env.map[1 + MAX_COL]) { // 12x12 is unlock.
-        app.setMapId(LEVEL_MAP_ID, MAP_12_ID);
+        idMap = MAP_12_ID;
+      } else if (S_WALL != env.map[0]) { // 14x14 is unlock.
+        idMap = MAP_14_ID;
       }
-
-      if (S_WALL != env.map[0]) {      // 14x14 is unlock.
-        app.setMapId(LEVEL_MAP_ID, MAP_14_ID);
-      }
+      app.doLuaScript("SetMapTex(%d,%d)", LEVEL_MAP_ID, idMap);
 
       //
       // Init map coins .
@@ -730,7 +731,7 @@ public:
       gen_coin_obj();
     }
 
-    app.setMapId(LEVEL_MAP_ID, MAP_12_ID);
+    app.doLuaScript("SetMapTex(%d,%d)", LEVEL_MAP_ID, MAP_12_ID);
     app.doLuaScript("UnlockMap12()");
   }
 
@@ -749,7 +750,7 @@ public:
       env.map[col + (MAX_ROW - 1) * MAX_COL] = S_EMPTY;
     }
 
-    app.setMapId(LEVEL_MAP_ID, MAP_14_ID);
+    app.doLuaScript("SetMapTex(%d,%d)", LEVEL_MAP_ID, MAP_14_ID);
     app.doLuaScript("UnlockMap14()");
   }
 
