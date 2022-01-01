@@ -58,7 +58,8 @@ enum COINEATER_RESOURCE_ID {
   MAP_12_ID = 30,
   MAP_14_ID = 31,
   LEVEL_MAP_ID = 25,
-  SOUND_GAIN_COIN = 67
+  SOUND_GAIN_COIN = 67,
+  CURR_SEL_COIN_EATER = 9
 };
 
 enum COINEATER_COMMAND {
@@ -380,6 +381,7 @@ public:
     }
 
     update_ui_msg();
+    sel_coin_eater(sel_coin_eater_res);
   }
 
   void init_train()
@@ -879,6 +881,7 @@ public:
   void sel_coin_eater(int sel_res)
   {
     sel_coin_eater_res = sel_res;
+    AppT::getInst().setTexId(CURR_SEL_COIN_EATER, sel_res);
   }
 
   void gen_info_msg()
