@@ -351,7 +351,6 @@ Level = {}
 Level.OnCreate = function(param)
   Good.FireUserIntEvent(CMD_INIT_GAME)
   UpdateAutoSwitchState()
-  SetMapTex(25, 24)
 end
 
 function OnStepInit(param)

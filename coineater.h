@@ -290,6 +290,8 @@ public:
 
     AppT &app = AppT::getInst();
 
+    int idMap = MAP_10_ID;
+
     if (-1 == start_pos) {
 
       //
@@ -334,13 +336,11 @@ public:
       // Set map lock state.
       //
 
-      int idMap = MAP_10_ID;
       if (S_WALL != env.map[1 + MAX_COL]) { // 12x12 is unlock.
         idMap = MAP_12_ID;
       } else if (S_WALL != env.map[0]) { // 14x14 is unlock.
         idMap = MAP_14_ID;
       }
-      app.doLuaScript("SetMapTex(%d,%d)", LEVEL_MAP_ID, idMap);
 
       //
       // Init map coins .
@@ -354,6 +354,8 @@ public:
 
       stage.initialize(this, &CoinEaterGame::stage_game);
     }
+
+    app.doLuaScript("SetMapTex(%d,%d)", LEVEL_MAP_ID, idMap);
 
     //
     // Init coin eater collections.
