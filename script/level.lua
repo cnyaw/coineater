@@ -279,41 +279,25 @@ function GenInfoMsg(gained_coin, spent_coin, sent_coin_eater, chest_level, repla
   end
   info_msg_root = Good.GenDummy(info_dialog)
 
-  local offset_x, offset_y = 40, 60
-  local s1 = string.format('gained coin:%d', gained_coin)
-  local s1o = Good.GenTextObj(info_msg_root, s1, DIALOG_FONT_SIZE)
-  SetTextObjColor(s1o, 0xff000000)
-  Good.SetPos(s1o, offset_x, offset_y)
+  local function offset_y_closure() local n = 0 return function() local y = 60 + n * (8 + DIALOG_FONT_SIZE) n = n + 1 return y end end
+  local offset_x, offset_y = 40, offset_y_closure()
 
-  local s2 = string.format('spent coin:%d', spent_coin)
-  local s2o = Good.GenTextObj(info_msg_root, s2, DIALOG_FONT_SIZE)
-  SetTextObjColor(s2o, 0xff000000)
-  Good.SetPos(s2o, offset_x, offset_y + (8 + DIALOG_FONT_SIZE))
+  local labels = {
+    string.format('gained coin:%d', gained_coin),
+    string.format('spent coin:%d', spent_coin),
+    string.format('sent coin eater:%d', sent_coin_eater),
+    string.format('chest level:%d', chest_level),
+    string.format('play count:%d', replay_count),
+    GetPlayTimeStr(play_time),
+    string.format('max iq:%d', max_iq)
+  }
 
-  local s3 = string.format('sent coin eater:%d', sent_coin_eater)
-  local s3o = Good.GenTextObj(info_msg_root, s3, DIALOG_FONT_SIZE)
-  SetTextObjColor(s3o, 0xff000000)
-  Good.SetPos(s3o, offset_x, offset_y + 2 * (8 + DIALOG_FONT_SIZE))
-
-  local s4 = string.format('chest level:%d', chest_level)
-  local s4o = Good.GenTextObj(info_msg_root, s4, DIALOG_FONT_SIZE)
-  SetTextObjColor(s4o, 0xff000000)
-  Good.SetPos(s4o, offset_x, offset_y + 3 * (8 + DIALOG_FONT_SIZE))
-
-  local s5 = string.format('play count:%d', replay_count)
-  local s5o = Good.GenTextObj(info_msg_root, s5, DIALOG_FONT_SIZE)
-  SetTextObjColor(s5o, 0xff000000)
-  Good.SetPos(s5o, offset_x, offset_y + 4 * (8 + DIALOG_FONT_SIZE))
-
-  local s6 = GetPlayTimeStr(play_time)
-  local s6o = Good.GenTextObj(info_msg_root, s6, DIALOG_FONT_SIZE)
-  SetTextObjColor(s6o, 0xff000000)
-  Good.SetPos(s6o, offset_x, offset_y + 5 * (8 + DIALOG_FONT_SIZE))
-
-  local s7 = string.format('max iq:%d', max_iq)
-  local s7o = Good.GenTextObj(info_msg_root, s7, DIALOG_FONT_SIZE)
-  SetTextObjColor(s7o, 0xff000000)
-  Good.SetPos(s7o, offset_x, offset_y + 6 * (8 + DIALOG_FONT_SIZE))
+  for i = 1, #labels do
+    local s = labels[i]
+    local o = Good.GenTextObj(info_msg_root, s, DIALOG_FONT_SIZE)
+    SetTextObjColor(o, 0xff000000)
+    Good.SetPos(o, offset_x, offset_y())
+  end
 end
 
 function UpdateInfoMsg()
