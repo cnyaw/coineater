@@ -606,12 +606,19 @@ public:
   void update_ui_msg()
   {
     AppT &app = AppT::getInst();
-    app.doLuaScript("UpdateTotalCoinMsg(%d,%d,%d)", total_coin, -1 == start_pos ? 0 : MAX_AUTO_GAIN_COUNTER, auto_gain_counter);
-    app.doLuaScript("UpdateCoinEaterMsg(%d,%d,%d,%d)", coin_eater.size(), max_coin_eater, next_max_coin_eater_cost, MAX_MAX_COIN_EATER);
-    app.doLuaScript("UpdateScoreMsg(%d,%d)", avg_score, best_score);
-    app.doLuaScript("UpdateStabilityMsg(%d,%d,%d)", stability, next_stability_cost, MAX_STABILITY);
-    app.doLuaScript("UpdateUnlockNextMapMsg(%d,%d)", -1 == start_pos || S_WALL != env.map[0] ? 0 : unlock_next_map_cost);
-    app.doLuaScript("UpdateNextWalkerMsg(%d)", next_walker_counter);
+    app.doLuaScript(
+      "UpdateTotalCoinMsg(%d,%d,%d)"
+      "UpdateCoinEaterMsg(%d,%d,%d,%d)"
+      "UpdateScoreMsg(%d,%d)"
+      "UpdateStabilityMsg(%d,%d,%d)"
+      "UpdateUnlockNextMapMsg(%d,%d)"
+      "UpdateNextWalkerMsg(%d)"
+        , total_coin, -1 == start_pos ? 0 : MAX_AUTO_GAIN_COUNTER, auto_gain_counter
+        , coin_eater.size(), max_coin_eater, next_max_coin_eater_cost, MAX_MAX_COIN_EATER
+        , avg_score, best_score
+        , stability, next_stability_cost, MAX_STABILITY
+        , -1 == start_pos || S_WALL != env.map[0] ? 0 : unlock_next_map_cost
+        , next_walker_counter);
   }
 
   void gen_coin_obj()
