@@ -611,7 +611,7 @@ public:
       "UpdateCoinEaterMsg(%d,%d,%d,%d)"
       "UpdateScoreMsg(%d,%d)"
       "UpdateStabilityMsg(%d,%d,%d)"
-      "UpdateUnlockNextMapMsg(%d,%d)"
+      "UpdateUnlockNextMapMsg(%d)"
       "UpdateNextWalkerMsg(%d)"
         , total_coin, -1 == start_pos ? 0 : MAX_AUTO_GAIN_COUNTER, auto_gain_counter
         , coin_eater.size(), max_coin_eater, next_max_coin_eater_cost, MAX_MAX_COIN_EATER
