@@ -11,7 +11,7 @@ end
 function AnimDropDone(param)
   local x,y = Good.GetPos(32)
   local l,t,w,h = Good.GetDim(32)
-  local loop1 = ArAddLoop(nil)
+  local loop1 = ArAddLoop()
   local to_x = x + math.random(w)
   local to_y = y + math.random(h)
   local cur_x, cur_y = Good.GetPos(param._id)
@@ -22,7 +22,7 @@ function AnimDropDone(param)
 end
 
 function InitWalkerAnim(param, init)
-  local loop1 = ArAddLoop(nil)
+  local loop1 = ArAddLoop()
   if (nil == init) then
     local cur_x, cur_y = Good.GetPos(param._id)
     local x,y = Good.GetPos(32)
@@ -36,7 +36,7 @@ function InitWalkerAnim(param, init)
 end
 
 function AnimArrange(param, x, y)
-  local loop1 = ArAddLoop(nil)
+  local loop1 = ArAddLoop()
   ArAddMoveTo(loop1, 'Pos', 0.5, x, y).ease = ArEaseOutBounce
   ArAddCall(loop1, 'AnimDropDone', 5 + math.random(20))
   param.k = ArAddAnimator({loop1})

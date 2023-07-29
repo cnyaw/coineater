@@ -188,7 +188,7 @@ GainCoin.OnStep = function(param)
   if (nil == param.k) then
     local x, y = Good.GetPos(8)
     local mx, my = Good.GetPos(25)
-    local loop1 = ArAddLoop(nil)
+    local loop1 = ArAddLoop()
     ArAddMoveTo(loop1, 'Pos', 0.5 + math.random() / 2, x - mx, y - my).ease = ArEaseOut
     ArAddCall(loop1, 'KillAnimObj', 0)
     param.k = ArAddAnimator({loop1})
@@ -203,7 +203,7 @@ GainChestCoin.OnStep = function(param)
   if (nil == param.k) then
     local x, y = Good.GetPos(8)
     local mx, my = Good.GetPos(25)
-    local loop1 = ArAddLoop(nil)
+    local loop1 = ArAddLoop()
     ArAddMoveBy(loop1, 'Pos', math.random() / 3, math.random(80) - 40, math.random(80) - 40).ease = ArEaseIn
     ArAddMoveTo(loop1, 'Pos', 0.5 + math.random() / 2, x - mx, y - my).ease = ArEaseOut
     ArAddCall(loop1, 'KillAnimObj', 0)
@@ -217,7 +217,7 @@ StateIcon = {}
 
 StateIcon.OnStep = function(param)
   if (nil == param.k) then
-    local loop1 = ArAddLoop(nil)
+    local loop1 = ArAddLoop()
     ArAddCall(loop1, 'KillAnimObj', 0.15)
     param.k = ArAddAnimator({loop1})
   else
@@ -230,9 +230,9 @@ UnlockMap = {}
 UnlockMap.OnStep = function(param)
   if (nil == param.k) then
     local duration = 1.5
-    local loop1 = ArAddLoop(nil)
+    local loop1 = ArAddLoop()
     ArAddCall(loop1, 'KillAnimObj', duration)
-    local loop2 = ArAddLoop(nil)
+    local loop2 = ArAddLoop()
     ArAddMoveTo(loop2, 'BgColor', duration, 0x00ffffff)
     param.k = ArAddAnimator({loop1, loop2})
   else
@@ -244,7 +244,7 @@ AnimInvalidPortalPos = {}
 
 AnimInvalidPortalPos.OnStep = function(param)
   if (nil == param.k) then
-    local loop1 = ArAddLoop(nil)
+    local loop1 = ArAddLoop()
     ArAddMoveTo(loop1, 'Alpha', 0.4, 0)
     ArAddCall(loop1, 'KillAnimObj', 0)
     param.k = ArAddAnimator({loop1})
