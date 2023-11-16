@@ -255,7 +255,7 @@ public:
 
     for (size_t i = 0; i < pool.size(); i++) {
       char buff[32];
-      sprintf(buff, "%d", i);
+      sprintf(buff, "%d", (int)i);
       gpool[(const char*)buff] = pool[i].gene;
     }
 
