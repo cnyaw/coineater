@@ -279,8 +279,7 @@ function GenInfoMsg(gained_coin, spent_coin, sent_coin_eater, chest_level, repla
   end
   info_msg_root = Good.GenDummy(info_dialog)
 
-  local function offset_y_closure() local n = 0 return function() local y = 60 + n * (8 + DIALOG_FONT_SIZE) n = n + 1 return y end end
-  local offset_x, offset_y = 40, offset_y_closure()
+  local offset_x, offset_y = 40, AutoIncrementor(60 - 8 - DIALOG_FONT_SIZE, 8 + DIALOG_FONT_SIZE)
 
   local labels = {
     string.format('gained coin:%d', gained_coin),
