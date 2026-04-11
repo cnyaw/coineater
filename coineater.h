@@ -26,6 +26,7 @@ enum COINEATER_GAME_CONST {
   INIT_STEP_MOVE_TICK = 6,
   INIT_TOTAL_COIN_COUNT = 10000,
   INIT_START_POINT_TRAIN_COUNT = 200,
+  INIT_BEST_SCORE = -10000,
   BASE_TRAIN_COUNT = 2,
   INIT_MAX_COIN_EATER = 10,
   COST_PUT_COIN_EATER = 1,
@@ -109,7 +110,7 @@ public:
   std::map<int, CoinEaterObj> coin_eater;  // <objid, CoinEaterObj>
   int total_coin, gained_coin, spent_coin;
   int max_coin_eater, sent_coin_eater, next_max_coin_eater_cost;
-  int avg_score, best_score;
+  int avg_score, best_score, base_best_score;
   int stability, next_stability_cost;   // 1%~80%. When put coin eater, used as selection range.
   int stability_counter, next_stability_counter;
   int unlock_next_map_cost;
@@ -125,7 +126,7 @@ public:
   CoinEaterGame() : start_pos(-1)
   {
     cur_coin_eater_res_idx = gained_coin = spent_coin = sent_coin_eater = play_time = replay_count = 0;
-    max_iq = -10000;
+    max_iq = INIT_BEST_SCORE;
     sel_coin_eater_res = TEXTURE_EATER_ID;
     next_walker_counter = next_walker_cost = INIT_COIN_EATER_WALKER_COST;
   }
@@ -160,6 +161,7 @@ public:
 
     avg_score = attr["avg_score"];
     best_score = attr["best_score"];
+    base_best_score = attr["base_best_score"];
 
     max_coin_eater = attr["max_coin_eater"];
     sent_coin_eater = attr["sent_coin_eater"];
@@ -230,6 +232,7 @@ public:
 
     attr["avg_score"] = avg_score;
     attr["best_score"] = best_score;
+    attr["base_best_score"] = base_best_score;
 
     attr["max_coin_eater"] = max_coin_eater;
     attr["sent_coin_eater"] = sent_coin_eater;
@@ -288,8 +291,6 @@ public:
     chest_pos = -1;
     next_chest_counter = INIT_NEXT_CHEST_COUNTER;
 
-    AppT &app = AppT::getInst();
-
     int idMap = MAP_10_ID;
 
     if (-1 == start_pos) {
@@ -302,7 +303,7 @@ public:
       total_coin = INIT_TOTAL_COIN_COUNT;
       max_coin_eater = INIT_MAX_COIN_EATER;
       stability_counter = auto_gain_counter = 0;
-      avg_score = best_score = -10000;
+      avg_score = best_score = base_best_score = INIT_BEST_SCORE;
       stability = INIT_STABILITY;
       next_max_coin_eater_cost = INIT_INC_MAX_COIN_EATER_COST;
       next_stability_cost = INIT_INC_STABILITY_COST;
@@ -355,6 +356,7 @@ public:
       stage.initialize(this, &CoinEaterGame::stage_game);
     }
 
+    AppT &app = AppT::getInst();
     app.doLuaScript("SetMapTex(%d,%d)", LEVEL_MAP_ID, idMap);
 
     //
@@ -515,7 +517,10 @@ public:
     }
     avg_score /= (int)pool.size();
     best_score = (std::max)(best_score, avg_score);
-    max_iq = (std::max)(max_iq, best_score);
+    if (INIT_BEST_SCORE == base_best_score && INIT_BEST_SCORE != best_score) {
+      base_best_score = best_score;
+    }
+    max_iq = (std::max)(max_iq, best_score - base_best_score);
   }
 
   void train(int test_round)
@@ -605,8 +610,7 @@ public:
 
   void update_ui_msg()
   {
-    AppT &app = AppT::getInst();
-    app.doLuaScript(
+    AppT::getInst().doLuaScript(
       "UpdateTotalCoinMsg(%d,%d,%d)"
       "UpdateCoinEaterMsg(%d,%d,%d,%d)"
       "UpdateScoreMsg(%d,%d)"
@@ -615,7 +619,7 @@ public:
       "UpdateNextWalkerMsg(%d)"
         , total_coin, -1 == start_pos ? 0 : MAX_AUTO_GAIN_COUNTER, auto_gain_counter
         , coin_eater.size(), max_coin_eater, next_max_coin_eater_cost, MAX_MAX_COIN_EATER
-        , avg_score, best_score
+        , avg_score - base_best_score, best_score - base_best_score
         , stability, next_stability_cost, MAX_STABILITY
         , -1 == start_pos || S_WALL != env.map[0] ? 0 : unlock_next_map_cost
         , next_walker_counter);
@@ -623,8 +627,6 @@ public:
 
   void gen_coin_obj()
   {
-    AppT &app = AppT::getInst();
-
     int pos = env.get_rand_empty_pos();
 
     int coin_tex_id = TEXTURE_COIN_ID;
@@ -638,6 +640,7 @@ public:
       }
     }
 
+    AppT &app = AppT::getInst();
     int o = app.genObj(LEVEL_MAP_ID, coin_tex_id, "");
     app.addChild(LEVEL_MAP_ID, o, 0);
     set_obj_pos(app, o, pos % MAX_COL, pos / MAX_COL);
@@ -725,8 +728,6 @@ public:
 
   void unlock_map_12()
   {
-    AppT &app = AppT::getInst();
-
     for (int col = 1; col < MAX_COL - 1; col++) {
       env.map[col + MAX_COL] = S_EMPTY;
     }
@@ -742,14 +743,13 @@ public:
       gen_coin_obj();
     }
 
+    AppT &app = AppT::getInst();
     app.doLuaScript("SetMapTex(%d,%d)", LEVEL_MAP_ID, MAP_12_ID);
     app.doLuaScript("UnlockMap12()");
   }
 
   void unlock_map_14()
   {
-    AppT &app = AppT::getInst();
-
     for (int col = 0; col < MAX_COL; col++) {
       env.map[col] = S_EMPTY;
     }
@@ -761,6 +761,7 @@ public:
       env.map[col + (MAX_ROW - 1) * MAX_COL] = S_EMPTY;
     }
 
+    AppT &app = AppT::getInst();
     app.doLuaScript("SetMapTex(%d,%d)", LEVEL_MAP_ID, MAP_14_ID);
     app.doLuaScript("UnlockMap14()");
   }
