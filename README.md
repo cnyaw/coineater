@@ -1,7 +1,10 @@
 # coineater
 
-Created by Good Game Editor. https://good-ed.blogspot.com <br/>
+Created by Good Game Editor. https://good-ed.blogspot.com
+
 Play https://smallworld.idv.tw/game/coineater/play.html?pkg=coineater.zip
+
+Android download https://play.google.com/store/apps/details?id=weilican.coineater
 
 Coin eater is a game to simulate the evolution of biological mechanisms of nature, let the path finding AI of coin eaters self-evolution.
 
