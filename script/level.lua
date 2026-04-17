@@ -205,6 +205,13 @@ function CloseQuitConfirmDialog()
   Level.OnStep = OnStepGame
 end
 
+function GenOptDlgTextItem(parent, x, y, text)
+  local o = Good.GenTextObj(parent, text, DIALOG_FONT_SIZE)
+  SetTextObjColor(o, 0xff000000)
+  Good.SetPos(o, x, y)
+  return o
+end
+
 function ShowOptionDialog()
   option_dialog = GenDialogObj(OPTION_DIALOG_W, OPTION_DIALOG_H)
   local cancel = Good.GenObj(option_dialog, 61)
@@ -213,26 +220,18 @@ function ShowOptionDialog()
   local offset_x = 28
   option_snd = Good.GenObj(option_dialog, 65)
   Good.SetPos(option_snd, offset_x, 30)
-  local snd_msg = Good.GenTextObj(option_dialog, 'Sound', DIALOG_FONT_SIZE)
-  SetTextObjColor(snd_msg, 0xff000000)
-  Good.SetPos(snd_msg, offset_x + 50, 42)
+  GenOptDlgTextItem(option_dialog, offset_x + 50, 42, 'Sound')
   UpdateSndSwitchState()
 
   option_bgm = Good.GenObj(option_dialog, 65)
   Good.SetPos(option_bgm, offset_x, 90)
-  local bgm_msg = Good.GenTextObj(option_dialog, 'BGM', DIALOG_FONT_SIZE)
-  SetTextObjColor(bgm_msg, 0xff000000)
-  Good.SetPos(bgm_msg, offset_x + 50, 102)
+  GenOptDlgTextItem(option_dialog, offset_x + 50, 102, 'BGM')
   UpdateBgmSwitchState()
 
   option_reset = Good.GenObj(option_dialog, 66)
   Good.SetPos(option_reset, offset_x - 10, 160)
-  local reset_msg_1 = Good.GenTextObj(option_reset, 'Keep coin eater collection and', DIALOG_FONT_SIZE)
-  SetTextObjColor(reset_msg_1, 0xff000000)
-  Good.SetPos(reset_msg_1, 0, 40)
-  local reset_msg_2 = Good.GenTextObj(option_reset, 'play new game', DIALOG_FONT_SIZE)
-  SetTextObjColor(reset_msg_2, 0xff000000)
-  Good.SetPos(reset_msg_2, 0, 55)
+  GenOptDlgTextItem(option_reset, 0, 40, 'Keep coin eater collection and')
+  GenOptDlgTextItem(option_reset, 0, 55, 'play new game')
 
   option_info = Good.GenObj(option_dialog, 73)
   Good.SetPos(option_info, offset_x + 150, 95)
