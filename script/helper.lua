@@ -316,9 +316,9 @@ end
 
 function UpdateSwitch(IsOn, o)
   if (1 == IsOn) then
-    Good.SetBgColor(o, 0xffffffff)
+    Good.SetAlpha(o, 0xff)
   else
-    Good.SetBgColor(o, 0x80808080)
+    Good.SetAlpha(o, 0x80)
   end
 end
 
