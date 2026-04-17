@@ -27,6 +27,8 @@ enum COINEATER_GAME_CONST {
   INIT_TOTAL_COIN_COUNT = 10000,
   INIT_START_POINT_TRAIN_COUNT = 200,
   INIT_BEST_SCORE = -10000,
+  MAX_IQ_RANGE = 800,
+  MAX_IQ_RANGE_BASE = 180,
   BASE_TRAIN_COUNT = 2,
   INIT_MAX_COIN_EATER = 10,
   COST_PUT_COIN_EATER = 1,
@@ -495,6 +497,11 @@ public:
     }
   }
 
+  int norm_score(int score) const
+  {
+    return (int)(MAX_IQ_RANGE_BASE * (score - base_best_score) / (float)MAX_IQ_RANGE);
+  }
+
   void score_coin_eater(int test_round)
   {
     //
@@ -520,7 +527,7 @@ public:
     if (INIT_BEST_SCORE == base_best_score && INIT_BEST_SCORE != best_score) {
       base_best_score = best_score;
     }
-    max_iq = (std::max)(max_iq, best_score - base_best_score);
+    max_iq = (std::max)(max_iq, best_score);
   }
 
   void train(int test_round)
@@ -619,7 +626,7 @@ public:
       "UpdateNextWalkerMsg(%d)"
         , total_coin, -1 == start_pos ? 0 : MAX_AUTO_GAIN_COUNTER, auto_gain_counter
         , coin_eater.size(), max_coin_eater, next_max_coin_eater_cost, MAX_MAX_COIN_EATER
-        , avg_score - base_best_score, best_score - base_best_score
+        , norm_score(avg_score), norm_score(best_score)
         , stability, next_stability_cost, MAX_STABILITY
         , -1 == start_pos || S_WALL != env.map[0] ? 0 : unlock_next_map_cost
         , next_walker_counter);
@@ -896,7 +903,7 @@ public:
 
   void gen_info_msg()
   {
-    AppT::getInst().doLuaScript("GenInfoMsg(%d,%d,%d,%d,%d,%d,%d)", gained_coin, spent_coin, sent_coin_eater, get_chest_level(), replay_count, play_time / 60, max_iq);
+    AppT::getInst().doLuaScript("GenInfoMsg(%d,%d,%d,%d,%d,%d,%d)", gained_coin, spent_coin, sent_coin_eater, get_chest_level(), replay_count, play_time / 60, norm_score(max_iq));
   }
 
   void handle_int_event(int i)
